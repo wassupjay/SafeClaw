@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "safeclaw"
+name = "safeclaw-guard"
 version = "0.1.0"
 description = "Universal outbound data guard for AI agents — regex-first NER pipeline, zero ML weight, runs everywhere."
 readme = "README.md"
