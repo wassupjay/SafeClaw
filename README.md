@@ -5,7 +5,7 @@
 Safeclaw catches sensitive data (API keys, passwords, emails, credit cards) before an AI agent accidentally leaks it. Runs on-premise with zero external calls — works for local dev, CI/CD pipelines, and enterprise deployments alike.
 
 ```bash
-pip install git+https://github.com/wassupjay/SafeClaw.git
+pip install safeclaw
 ```
 
 ---
@@ -62,7 +62,7 @@ Configurable per entity type — API keys block, emails redact. Your call.
 ### Claude Code (1 command)
 
 ```bash
-pip install git+https://github.com/wassupjay/SafeClaw.git
+pip install safeclaw
 safeclaw install
 ```
 
