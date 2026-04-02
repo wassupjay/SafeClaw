@@ -2,7 +2,7 @@
 
 **Universal outbound data guard for AI agents.**
 
-Safeclaw catches sensitive data (API keys, passwords, emails, credit cards) before an AI agent accidentally leaks it — locally, instantly, with zero config.
+Safeclaw catches sensitive data (API keys, passwords, emails, credit cards) before an AI agent accidentally leaks it. Runs on-premise with zero external calls — works for local dev, CI/CD pipelines, and enterprise deployments alike.
 
 ```bash
 pip install git+https://github.com/wassupjay/SafeClaw.git
