@@ -1,0 +1,69 @@
+# Safeclaw configuration
+# Copy this file to .safeclaw.yaml in your project or home directory.
+# Run `safeclaw init` to create a copy in the current directory.
+#
+# Reference: https://github.com/your-org/safeclaw
+
+version: 1
+
+# Minimum confidence score (0.0–1.0) to flag an entity.
+# Lower = more sensitive but more false positives.
+# Higher = fewer false positives but may miss lower-confidence matches.
+threshold: 0.75
+
+# fail_open: true  → if scanning throws an error, pass the message through (default, safer for uptime)
+# fail_open: false → if scanning throws an error, block the message
+fail_open: true
+
+# Per-entity-type rules.
+# action: "block"  — replace the entire message with a warning
+# action: "redact" — replace only the sensitive span with [REDACTED:TYPE]
+# enabled: false   — skip this entity type entirely
+rules:
+  api_key:
+    action: block
+    enabled: true
+
+  private_key:
+    action: block
+    enabled: true
+
+  jwt:
+    action: redact    # JWTs are common in logs; redact rather than hard-block
+    enabled: true
+
+  password:
+    action: block
+    enabled: true
+
+  email:
+    action: redact
+    enabled: true
+
+  phone:
+    action: redact
+    enabled: true
+
+  ssn:
+    action: block
+    enabled: true
+
+  passport:
+    action: redact
+    enabled: true
+
+  ip_address:
+    action: redact
+    enabled: false    # Disabled by default — IP addresses are often benign in agent context
+
+  credit_card:
+    action: block
+    enabled: true
+
+  bank_account:
+    action: block
+    enabled: true
+
+# HTTP server settings (used by `safeclaw serve`)
+server:
+  port: 18791
