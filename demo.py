@@ -18,7 +18,6 @@ TESTS = [
     ("Anthropic key → block", "Use sk-ant-api03-abcdefghijklmnop12345-xyz as the key."),
     ("AWS key → block", "Access key: AKIAIOSFODNN7EXAMPLE"),
     ("GitHub token → block", "ghp_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmn"),
-    # Stripe key is built dynamically to avoid triggering GitHub push protection
     ("Stripe key → block", "sk" + "_live_" + "FAKEKEYFORTESTING00000000000000"),
     ("Password in config → block", "password = SuperSecret123!@#xyz"),
     ("Credentials in URL → block", "Connect to postgres://admin:p4ssw0rd_secret@db.internal:5432/app"),
