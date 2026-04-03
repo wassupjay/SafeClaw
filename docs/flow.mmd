@@ -1,0 +1,24 @@
+flowchart LR
+    ENV["Your secrets\n.env files, API keys\npasswords, customer data"]
+    AGENT["AI Agent\nClaude Code, Cursor, etc."]
+    SCAN["SAFECLAW\nscans outbound message"]
+    PASS["Pass through"]
+    REDACT["Redact PII"]
+    BLOCK["Block secrets"]
+    OUT["Outside world\nterminal, files, APIs"]
+
+    ENV --> AGENT
+    AGENT --> SCAN
+    SCAN -- clean --> PASS
+    SCAN -- email, phone --> REDACT
+    SCAN -- API key, password --> BLOCK
+    PASS --> OUT
+    REDACT --> OUT
+
+    style ENV fill:#6c757d,stroke:#333,color:#fff
+    style AGENT fill:#4a90d9,stroke:#333,color:#fff
+    style SCAN fill:#e8943a,stroke:#333,color:#fff
+    style PASS fill:#5cb85c,stroke:#333,color:#fff
+    style REDACT fill:#f0ad4e,stroke:#333,color:#fff
+    style BLOCK fill:#d9534f,stroke:#333,color:#fff
+    style OUT fill:#6c757d,stroke:#333,color:#fff

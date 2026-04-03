@@ -14,32 +14,7 @@ pip install safeclaw-guard
 
 AI agents have access to your codebase, `.env` files, databases, and configs. When they generate output — a shell command, a file, an API call — they can accidentally include secrets in plaintext. The agent doesn't know it's leaking. Safeclaw stops that at the exit.
 
-```mermaid
-flowchart LR
-    ENV["Your secrets\n.env files, API keys\npasswords, customer data"]
-    AGENT["AI Agent\nClaude Code, Cursor, etc."]
-    SCAN["SAFECLAW\nscans outbound message"]
-    PASS["Pass through"]
-    REDACT["Redact PII"]
-    BLOCK["Block secrets"]
-    OUT["Outside world\nterminal, files, APIs"]
-
-    ENV --> AGENT
-    AGENT --> SCAN
-    SCAN -- clean --> PASS
-    SCAN -- email, phone --> REDACT
-    SCAN -- API key, password --> BLOCK
-    PASS --> OUT
-    REDACT --> OUT
-
-    style ENV fill:#6c757d,stroke:#333,color:#fff
-    style AGENT fill:#4a90d9,stroke:#333,color:#fff
-    style SCAN fill:#e8943a,stroke:#333,color:#fff
-    style PASS fill:#5cb85c,stroke:#333,color:#fff
-    style REDACT fill:#f0ad4e,stroke:#333,color:#fff
-    style BLOCK fill:#d9534f,stroke:#333,color:#fff
-    style OUT fill:#6c757d,stroke:#333,color:#fff
-```
+![Safeclaw flow diagram](https://raw.githubusercontent.com/wassupjay/SafeClaw/main/docs/flow.png)
 
 **In plain English:** The AI agent reads your secrets to do its job. Safeclaw makes sure those secrets don't appear in the output.
 
@@ -116,43 +91,7 @@ safeclaw install --mcp
 
 ## Architecture
 
-```mermaid
-graph TB
-    subgraph "Safeclaw Core"
-        P["Pipeline"]
-        R["RegexDetector"]
-        M["MLDetector (pluggable)"]
-        P --> R
-        P --> M
-    end
-
-    subgraph "Integration Layer"
-        CLI["CLI (stdin/stdout)"]
-        HOOK["Claude Code Hook"]
-        MCP["MCP Server (stdio)"]
-        HTTP["HTTP Server (FastAPI)"]
-    end
-
-    subgraph "Policy Engine"
-        CFG["safeclaw.yaml config"]
-        RED["Redactor"]
-        GUARD["Guard"]
-    end
-
-    P --> GUARD
-    CFG --> GUARD
-    GUARD --> RED
-
-    CLI --> P
-    HOOK --> P
-    MCP --> P
-    HTTP --> P
-
-    style P fill:#4a90d9,stroke:#333,color:#fff
-    style R fill:#5cb85c,stroke:#333,color:#fff
-    style M fill:#5cb85c,stroke:#333,color:#fff,stroke-dasharray: 5 5
-    style GUARD fill:#e8943a,stroke:#333,color:#fff
-```
+![Safeclaw architecture diagram](https://raw.githubusercontent.com/wassupjay/SafeClaw/main/docs/arch.png)
 
 - **Pipeline pattern** (spaCy/sklearn-inspired) — pluggable detectors. Ships with `RegexDetector`, drop in an ML model later without changing any code.
 - **Pydantic v2 models** — typed `Span`, `Entity`, `GuardResult` following NER conventions.

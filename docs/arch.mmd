@@ -1,0 +1,35 @@
+graph TB
+    subgraph Core["Safeclaw Core"]
+        P["Pipeline"]
+        R["RegexDetector"]
+        M["MLDetector (pluggable)"]
+        P --> R
+        P --> M
+    end
+
+    subgraph Integrations["Integration Layer"]
+        CLI["CLI (stdin/stdout)"]
+        HOOK["Claude Code Hook"]
+        MCP["MCP Server (stdio)"]
+        HTTP["HTTP Server (FastAPI)"]
+    end
+
+    subgraph Policy["Policy Engine"]
+        CFG["safeclaw.yaml config"]
+        RED["Redactor"]
+        GUARD["Guard"]
+    end
+
+    P --> GUARD
+    CFG --> GUARD
+    GUARD --> RED
+
+    CLI --> P
+    HOOK --> P
+    MCP --> P
+    HTTP --> P
+
+    style P fill:#4a90d9,stroke:#333,color:#fff
+    style R fill:#5cb85c,stroke:#333,color:#fff
+    style M fill:#5cb85c,stroke:#333,color:#fff
+    style GUARD fill:#e8943a,stroke:#333,color:#fff
