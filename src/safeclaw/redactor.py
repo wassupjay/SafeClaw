@@ -51,9 +51,12 @@ def guard(
     ]
 
     blocked = [e for e in entities if e.action == Action.BLOCK]
+    redacted = [e for e in entities if e.action == Action.REDACT]
 
     if blocked:
-        labels = list(dict.fromkeys(e.label for e in blocked))  # unique, order-preserved
+        # Include both blocked and redacted entities in the error message
+        all_problematic = blocked + redacted
+        labels = list(dict.fromkeys(e.label for e in all_problematic))  # unique, order-preserved
         block_prefix = f"{RED}[SAFECLAW BLOCKED]{RESET}" if use_colors else "[SAFECLAW BLOCKED]"
         return GuardResult(
             safe=False,
