@@ -16,7 +16,7 @@ pip install safeclaw-guard
 
 AI agents have access to your codebase, `.env` files, databases, and configs. When they generate output — a shell command, a file, an API call — they can accidentally include secrets in plaintext. The agent doesn't know it's leaking. Safeclaw stops that at the exit.
 
-![Safeclaw flow diagram](flow.png)
+![Safeclaw flow diagram](https://raw.githubusercontent.com/wassupjay/SafeClaw/main/docs/flow.png)
 
 **In plain English:** The AI agent reads your secrets to do its job. Safeclaw makes sure those secrets don't appear in the output.
 
@@ -31,8 +31,6 @@ Output: "Send report to [REDACTED:EMAIL] and call [REDACTED:PHONE]"
 ```
 
 Configurable per entity type — API keys block, emails redact. Your call.
-
-**Colored CLI Output:** Blocked messages appear in red, redacted placeholders in yellow for better visibility.
 
 ---
 
@@ -81,8 +79,7 @@ safeclaw install  # For Claude Code specifically
 # Or use directly:
 echo "some text" | safeclaw scan
 safeclaw scan < file.txt
-# Control colors (enabled by default in terminals)
-safeclaw scan --no-color  # Disable colored output```
+```
 
 ---
 
@@ -103,7 +100,7 @@ safeclaw scan --no-color  # Disable colored output```
 
 ## Architecture
 
-![Safeclaw architecture diagram](arch.png)
+![Safeclaw architecture diagram](https://raw.githubusercontent.com/wassupjay/SafeClaw/main/docs/arch.png)
 
 - **Pipeline pattern** (spaCy/sklearn-inspired) — pluggable detectors. Ships with `RegexDetector`, drop in an ML model later without changing any code.
 - **Pydantic v2 models** — typed `Span`, `Entity`, `GuardResult` following NER conventions.
