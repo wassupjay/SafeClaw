@@ -4,6 +4,8 @@
 
 Safeclaw catches sensitive data (API keys, passwords, emails, credit cards) before an AI agent accidentally leaks it. Runs on-premise with zero external calls — works for local dev, CI/CD pipelines, and enterprise deployments alike.
 
+Works with **any AI agent**: Claude Code, OpenClaw, ClaudeClaw, Codex, and more!
+
 ```bash
 pip install safeclaw-guard
 ```
@@ -34,16 +36,18 @@ Configurable per entity type — API keys block, emails redact. Your call.
 
 ## Get Started
 
-### Claude Code (1 command)
+Safeclaw supports multiple integration methods depending on your agent and workflow:
+
+### 🤖 MCP-Compatible Agents (Claude Code, OpenClaw, ClaudeClaw, etc.)
 
 ```bash
 pip install safeclaw-guard
-safeclaw install
+safeclaw install --mcp
 ```
 
-Every tool call is now auto-scanned.
+Your MCP-compatible agent can now use Safeclaw's `safeclaw_scan` and `safeclaw_detect` tools automatically.
 
-### Python library
+### 🐍 Python Code (Any Python Agent)
 
 ```python
 from safeclaw import guard
@@ -54,7 +58,7 @@ print(result.blocked)   # True — API key detected
 print(result.text)      # [SAFECLAW BLOCKED] ...
 ```
 
-### HTTP server (any language)
+### 🌐 HTTP API (Any Language, Any Agent)
 
 ```bash
 safeclaw serve   # starts on localhost:18791
@@ -66,10 +70,15 @@ curl -X POST http://127.0.0.1:18791/scan \
   -d '{"text": "your text here"}'
 ```
 
-### MCP server (any MCP-compatible agent)
+### 💻 CLI Tool (Shell Scripts, CI/CD, Hooks)
 
 ```bash
-safeclaw install --mcp
+pip install safeclaw-guard
+safeclaw install  # For Claude Code specifically
+
+# Or use directly:
+echo "some text" | safeclaw scan
+safeclaw scan < file.txt
 ```
 
 ---
