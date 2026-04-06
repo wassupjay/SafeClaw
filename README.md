@@ -32,6 +32,8 @@ Output: "Send report to [REDACTED:EMAIL] and call [REDACTED:PHONE]"
 
 Configurable per entity type — API keys block, emails redact. Your call.
 
+**Colored CLI Output:** Blocked messages appear in red, redacted placeholders in yellow for better visibility.
+
 ---
 
 ## Get Started
@@ -79,7 +81,8 @@ safeclaw install  # For Claude Code specifically
 # Or use directly:
 echo "some text" | safeclaw scan
 safeclaw scan < file.txt
-```
+# Control colors (enabled by default in terminals)
+safeclaw scan --no-color  # Disable colored output```
 
 ---
 

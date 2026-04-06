@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install:*)",
+      "Bash(/usr/local/bin/npm install:*)",
+      "Bash(/opt/homebrew/bin/npm install:*)",
+      "Read(//usr/local/bin/**)",
+      "Read(//opt/homebrew/bin/**)",
+      "Read(//Users/jayanthsattineni/Documents/Projects/Safeclaw/$HOME/.nvm/versions/**)",
+      "Read(//Users/jayanthsattineni/Documents/Projects/Safeclaw/$HOME/.volta/**)",
+      "Read(//usr/bin/**)",
+      "Bash(ls /opt/homebrew/bin/python3*)",
+      "Bash(ls /usr/local/bin/python3*)",
+      "Bash(/opt/homebrew/bin/python3.13 --version)",
+      "Bash(/opt/homebrew/bin/python3.13 -m venv /Users/jayanthsattineni/Documents/Projects/Safeclaw/.venv)",
+      "Bash(.venv/bin/safeclaw scan:*)",
+      "Bash(echo \"EXIT: $?\")"
+    ]
+  }
+}

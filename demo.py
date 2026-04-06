@@ -36,7 +36,7 @@ print("=" * WIDTH)
 
 passed = 0
 for label, text in TESTS:
-    result = guard(text, config=config, pipeline=pipeline)
+    result = guard(text, config=config, pipeline=pipeline, use_colors=True)
 
     if result.safe:
         status = "\033[92mPASS\033[0m"

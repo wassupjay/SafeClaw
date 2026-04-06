@@ -30,6 +30,7 @@ dependencies = [
     "fastapi>=0.110",
     "uvicorn[standard]>=0.27",
     "mcp>=1.0",
+    "colorama>=0.4.6",
 ]
 
 [project.optional-dependencies]

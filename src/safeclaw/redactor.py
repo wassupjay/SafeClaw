@@ -7,6 +7,12 @@ from safeclaw.models import Action, Entity, GuardResult
 from safeclaw.pipeline import Pipeline
 
 
+# ANSI color codes for colored output
+RED = "\033[91m"
+YELLOW = "\033[93m"
+RESET = "\033[0m"
+
+
 # Module-level default pipeline (singleton — avoids re-init on every call)
 _default_pipeline = Pipeline()
 
@@ -15,6 +21,7 @@ def guard(
     text: str,
     config: SafeclawConfig | None = None,
     pipeline: Pipeline | None = None,
+    use_colors: bool = True,
 ) -> GuardResult:
     """Scan *text* and return a `GuardResult`.
 
@@ -47,18 +54,19 @@ def guard(
 
     if blocked:
         labels = list(dict.fromkeys(e.label for e in blocked))  # unique, order-preserved
+        block_prefix = f"{RED}[SAFECLAW BLOCKED]{RESET}" if use_colors else "[SAFECLAW BLOCKED]"
         return GuardResult(
             safe=False,
             blocked=True,
             text=(
-                f"[SAFECLAW BLOCKED] This message was not delivered because it "
+                f"{block_prefix} This message was not delivered because it "
                 f"contained sensitive data: {', '.join(labels)}"
             ),
             entities=entities,
         )
 
     # Redact-only path
-    redacted_text = _apply_redactions(text, entities)
+    redacted_text = _apply_redactions(text, entities, use_colors)
     return GuardResult(
         safe=False,
         blocked=False,
@@ -67,7 +75,7 @@ def guard(
     )
 
 
-def _apply_redactions(text: str, entities: list[Entity]) -> str:
+def _apply_redactions(text: str, entities: list[Entity], use_colors: bool = True) -> str:
     """Replace matched spans with `[REDACTED:TYPE]` placeholders.
 
     Processes from the end of the string so earlier offsets stay valid.
@@ -75,6 +83,8 @@ def _apply_redactions(text: str, entities: list[Entity]) -> str:
     sorted_ents = sorted(entities, key=lambda e: e.start, reverse=True)
     result = text
     for ent in sorted_ents:
-        placeholder = f"[REDACTED:{ent.entity_type.value.upper()}]"
+        color_prefix = YELLOW if use_colors else ""
+        color_suffix = RESET if use_colors else ""
+        placeholder = f"{color_prefix}[REDACTED:{ent.entity_type.value.upper()}]{color_suffix}"
         result = result[: ent.start] + placeholder + result[ent.end :]
     return result

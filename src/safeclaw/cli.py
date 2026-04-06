@@ -17,6 +17,10 @@ from pathlib import Path
 from typing import Optional
 
 import typer
+from colorama import Fore, Style, init
+
+# Initialize colorama for cross-platform color support
+init(autoreset=True)
 
 app = typer.Typer(
     name="safeclaw",
@@ -34,6 +38,7 @@ def scan(
     config: Optional[str] = typer.Option(None, "--config", "-c", help="Path to .safeclaw.yaml"),
     output_json: bool = typer.Option(False, "--json", help="Always output JSON"),
     detect_only: bool = typer.Option(False, "--detect-only", help="List entities without modifying text"),
+    no_color: bool = typer.Option(False, "--no-color", help="Disable colored output"),
 ) -> None:
     """Scan stdin for sensitive data. Works as a standalone scanner and as a Claude Code PreToolUse hook."""
     from safeclaw.config import load_config
@@ -72,7 +77,7 @@ def scan(
         sys.stdout.write(json.dumps(out, indent=2, default=str) + "\n")
         raise SystemExit(0)
 
-    result = guard(raw, config=cfg, pipeline=pipeline)
+    result = guard(raw, config=cfg, pipeline=pipeline, use_colors=not no_color)
 
     if output_json:
         sys.stdout.write(result.model_dump_json(indent=2) + "\n")
@@ -83,10 +88,11 @@ def scan(
         raise SystemExit(0)
 
     if result.blocked:
+        # Colors are already applied in redactor.py
         sys.stderr.write(result.text + "\n")
         raise SystemExit(1)
 
-    # Redacted
+    # Redacted - colors are already applied in redactor.py
     sys.stdout.write(result.text)
     raise SystemExit(0)
 
