@@ -16,7 +16,7 @@ pip install safeclaw-guard
 
 AI agents have access to your codebase, `.env` files, databases, and configs. When they generate output — a shell command, a file, an API call — they can accidentally include secrets in plaintext. The agent doesn't know it's leaking. Safeclaw stops that at the exit.
 
-![Safeclaw flow diagram](docs/flow.png)
+![Safeclaw flow diagram](flow.png)
 
 **In plain English:** The AI agent reads your secrets to do its job. Safeclaw makes sure those secrets don't appear in the output.
 
@@ -103,7 +103,7 @@ safeclaw scan --no-color  # Disable colored output```
 
 ## Architecture
 
-![Safeclaw architecture diagram](docs/arch.png)
+![Safeclaw architecture diagram](arch.png)
 
 - **Pipeline pattern** (spaCy/sklearn-inspired) — pluggable detectors. Ships with `RegexDetector`, drop in an ML model later without changing any code.
 - **Pydantic v2 models** — typed `Span`, `Entity`, `GuardResult` following NER conventions.
