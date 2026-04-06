@@ -12,7 +12,7 @@ RULES: list[PatternRule] = [
         id="anthropic_key",
         entity_type=EntityType.API_KEY,
         label="Anthropic API Key",
-        pattern=re.compile(r"\bsk-ant-[a-zA-Z0-9\-_]{20,}\b"),
+        pattern=re.compile(r"\bsk-ant-[a-zA-Z0-9\-_]{6,}\b"),
         confidence=0.99,
     ),
     PatternRule(
@@ -20,7 +20,7 @@ RULES: list[PatternRule] = [
         entity_type=EntityType.API_KEY,
         label="OpenAI API Key",
         # Covers sk-<org>-... and sk-proj-... formats
-        pattern=re.compile(r"\bsk-(?!ant-)[a-zA-Z0-9\-_]{20,}\b"),
+        pattern=re.compile(r"\bsk-(?!ant-)[a-zA-Z0-9\-_]{6,}\b"),
         confidence=0.97,
     ),
     PatternRule(
