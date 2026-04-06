@@ -6,4 +6,5 @@ dist/
 build/
 .ruff_cache/
 .pytest_cache/
-.claude/launch.json
+.claude/
+.DS_Store
