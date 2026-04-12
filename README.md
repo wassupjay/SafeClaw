@@ -47,7 +47,7 @@ safeclaw install --mcp
 
 Your MCP-compatible agent can now use Safeclaw's `safeclaw_scan` and `safeclaw_detect` tools automatically.
 
-### 🐍 Python Code (Any Python Agent)
+### Python Code (Any Python Agent)
 
 ```python
 from safeclaw import guard
@@ -58,7 +58,7 @@ print(result.blocked)   # True — API key detected
 print(result.text)      # [SAFECLAW BLOCKED] ...
 ```
 
-### 🌐 HTTP API (Any Language, Any Agent)
+###  HTTP API (Any Language, Any Agent)
 
 ```bash
 safeclaw serve   # starts on localhost:18791
@@ -70,7 +70,7 @@ curl -X POST http://127.0.0.1:18791/scan \
   -d '{"text": "your text here"}'
 ```
 
-### 💻 CLI Tool (Shell Scripts, CI/CD, Hooks)
+### CLI Tool (Shell Scripts, CI/CD, Hooks)
 
 ```bash
 pip install safeclaw-guard
